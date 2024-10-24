@@ -13,14 +13,16 @@ exports.register = async function (req, res) {
         if(login.errors.length > 0) {
             req.flash('errors', login.errors);
             req.session.save(function () {
-                return res.redirect('back');
+                res.location(req.get("Referrer") || "/");
+                return res.redirect('./index');
             });
             return;
         }
     
         req.flash('success', 'Seu usuário foi criado com sucesso.');
             req.session.save(function () {
-                return res.redirect('back');
+                res.location(req.get("Referrer") || "/");
+                return res.redirect('./index');
             });
         
     }catch (e) {
@@ -37,7 +39,8 @@ exports.login = async function (req, res) {
         if(login.errors.length > 0) {
             req.flash('errors', login.errors);
             req.session.save(function () {
-                return res.redirect('back');
+                res.location(req.get("Referrer") || "/");
+                return res.redirect('./index');
             });
             return;
         }
@@ -45,9 +48,11 @@ exports.login = async function (req, res) {
         req.flash('success', 'Você entrou no sistema.');
         req.session.user = login.user;
         req.session.save(function () {
-            return res.redirect('back');
+            res.location(req.get("Referrer") || "/");
+            return res.redirect('./index');
         });
-    } catch (e) {
+        
+    }catch (e) {
         console.log(e);
         return res.render('404');
     }
@@ -56,4 +61,4 @@ exports.login = async function (req, res) {
 exports.logout = function(req, res) {
     req.session.destroy();
     res.redirect('/');
-};
+}
