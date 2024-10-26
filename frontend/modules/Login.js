@@ -19,17 +19,25 @@ export default class Login {
 
     validate(e) {
         const el = e.target;
-        const emailInput = document.querySelector('input[name="email"]');
-        const passwordInput = document.querySelector('input[name="password"]');
+        const emailInput = el.querySelector('input[name="email"]');
+        const passwordInput = el.querySelector('input[name="password"]');
         let error = false;
 
-        if(!validator.isEmail(emailInput.value)) {
-            alert('E-mail inválido');
+        if(passwordInput.value.length < 3 || passwordInput.value.length > 50) {
+            const aviso = document.createElement('p');
+            aviso.textContent = 'Senha precisa ter entre 3 e 50 caracteres';
+            aviso.classList.add('text-danger');
+            aviso.classList.add('my-3');
+            el.insertAdjacentElement('afterend', aviso);
             error = true;
         }
 
-        if(passwordInput.value.length < 3 || passwordInput.value.length > 50) {
-            alert('Senha precisa ter entre 3 e 50 caracteres');
+        if(!validator.isEmail(emailInput.value)) {
+            const aviso = document.createElement('p');
+            aviso.textContent = 'E-mail inválido';
+            aviso.classList.add('text-danger');
+            aviso.classList.add('my-3');
+            el.insertAdjacentElement('afterend', aviso);
             error = true;
         }
 
